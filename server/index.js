@@ -1,13 +1,39 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { GraphQLScalarType, Kind } from 'graphql';
+import { Employee } from './models/schema.js';
+import './models/db.js';
 
 const app = express();
 
 const typeDefs = `
-type Query {
-    hello: String
-}
+  type Employee {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    age: Int!
+    dateOfJoining: String!
+    title: String!
+    department: String!
+    employeeType: String!
+    currentStatus: Boolean!
+  }
+
+  type Query {
+    employees: [Employee]
+  }
+
+  type Mutation {
+    createEmployee(
+      firstName: String!,
+      lastName: String!,
+      age: Int!,
+      dateOfJoining: String!,
+      title: String!,
+      department: String!,
+      employeeType: String!
+    ): Employee
+  }
 `;
 
 const GQLDate = new GraphQLScalarType({
@@ -35,16 +61,23 @@ const GQLDate = new GraphQLScalarType({
 
 const resolvers = {
     Query: {
-        hello: () => 'Hello World!'
+        employees: async () => await Employee.find({})
+    },
+    Mutation: {
+        createEmployee: async (_, args) => {
+            const newEmployee = new Employee(args);
+            return await newEmployee.save();
+        }
     }
+    // Date: GQLDate
 };
+
 const server = new ApolloServer({ typeDefs, resolvers });
 server.start().then(() => {
     server.applyMiddleware({ app, path: '/graphql' });
 });
 
 const port = process.env.PORT || 3001;
-// Start listening
 app.listen(port, () => {
     console.log(`GraphQL Server is running at http://localhost:${port}`);
 });
