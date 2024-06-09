@@ -57,7 +57,6 @@ const EmployeeDirectory = () => {
     setEmployees([...employees, employee])
   }
 
-  //Attempt to change the message from the child component 
   useEffect(() => {
 
     const wrap_function = async () => {
@@ -78,7 +77,7 @@ const EmployeeDirectory = () => {
       <div className="table-container">
         <EmployeeTable employeeData={employees} />
       </div>
-      {/* <EmployeeCreate handleCreateEmployee={handleCreateEmployee} /> */}
+      <EmployeeCreate handleCreateEmployee={handleCreateEmployee} />
     </div>
   );
 };
