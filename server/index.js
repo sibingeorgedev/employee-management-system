@@ -2,7 +2,8 @@ import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { GraphQLScalarType, Kind } from 'graphql';
 import { Employee } from './models/schema.js';
-import './models/db.js';
+import { } from "./models/db.js";
+// import { } from "./initial-data.js";
 
 const app = express();
 
@@ -20,7 +21,7 @@ const typeDefs = `
   }
 
   type Query {
-    employees: [Employee]
+    getEmployees: [Employee]
   }
 
   type Mutation {
@@ -61,7 +62,7 @@ const GQLDate = new GraphQLScalarType({
 
 const resolvers = {
     Query: {
-        employees: async () => await Employee.find({})
+        getEmployees: async () => await Employee.find({})
     },
     Mutation: {
         createEmployee: async (_, args) => {

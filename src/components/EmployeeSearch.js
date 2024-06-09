@@ -8,8 +8,9 @@ const EmployeeSearch = () => {
   };
 
   return (
-    <div>
+    <div className="search-input">
       <input
+        className="search-input-field"
         type="text"
         placeholder="Search employees"
         value={searchTerm}

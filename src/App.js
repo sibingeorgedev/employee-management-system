@@ -1,9 +1,10 @@
 import React from 'react';
+import './index.css';
 import EmployeeDirectory from './components/EmployeeDirectory';
 
 function App() {
   return (
-    <div>
+    <div className="app-container">
       <EmployeeDirectory/>
     </div>
   );
