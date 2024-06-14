@@ -1,0 +1,32 @@
+scalar Date
+
+type Employee {
+  id: Int!
+  firstName: String!
+  lastName: String!
+  age: Int!
+  dateOfJoining: Date!
+  title: String!
+  department: String!
+  employeeType: String!
+  currentStatus: Boolean!
+}
+
+input InputEmployee {
+  firstName: String!
+  lastName: String!
+  age: Int!
+  dateOfJoining: Date!
+  title: String!
+  department: String!
+  employeeType: String!
+  currentStatus: Boolean!
+}
+
+type Query {
+  getEmployees: [Employee]!
+}
+
+type Mutation {
+  addEmployee(employee: InputEmployee!): Employee!
+}
