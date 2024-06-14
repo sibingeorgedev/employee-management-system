@@ -5,7 +5,8 @@ import Modal from 'react-modal';
 Modal.setAppElement('#root');
 
 function EmployeeCreate(props) {
-  const [formState, setFormState] = useState({
+
+  const initialFormState = {
     firstName: '',
     lastName: '',
     age: '',
@@ -13,8 +14,9 @@ function EmployeeCreate(props) {
     title: 'Employee',
     department: 'IT',
     employeeType: 'FullTime'
-  });
+  };
 
+  const [formState, setFormState] = useState(initialFormState);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleChange = (e) => {
@@ -23,6 +25,15 @@ function EmployeeCreate(props) {
       ...prevState,
       [name]: value
     }));
+  };
+
+  const resetForm = () => {
+    setFormState(initialFormState);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    resetForm();
   };
 
   const handleSubmit = async (e) => {
@@ -40,11 +51,10 @@ function EmployeeCreate(props) {
       currentStatus: true,
     };
 
-    console.log("Employee => ", employee);
-
     await props.handleCreateEmployee(employee);
 
     setIsModalOpen(false);
+    resetForm();
   };
 
   return (
@@ -53,7 +63,7 @@ function EmployeeCreate(props) {
 
       <Modal
         isOpen={isModalOpen}
-        onRequestClose={() => setIsModalOpen(false)}
+        onRequestClose={() => closeModal()}
         contentLabel="Create Employee"
         className="modal"
         overlayClassName="overlay"
@@ -145,7 +155,7 @@ function EmployeeCreate(props) {
             {props.mutationError && <p className="error">An error occurred: {props.mutationError.message}</p>}
           </form>
         </div>
-        <button onClick={() => setIsModalOpen(false)} className="closeButton">Close</button>
+        <button onClick={() => closeModal()} className="closeButton">Close</button>
       </Modal>
     </div>
   );
