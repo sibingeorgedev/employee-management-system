@@ -161,6 +161,7 @@ function EmployeeCreate(props) {
   );
 }
 
+// Define the prop types for the component to ensure the data type of the props passed to the component is correct.
 EmployeeCreate.propTypes = {
   handleCreateEmployee: PropTypes.func.isRequired,
   errors: PropTypes.object,
@@ -168,6 +169,7 @@ EmployeeCreate.propTypes = {
   mutationError: PropTypes.object
 };
 
+// Set the default values for the props in case they are not passed to the component.
 EmployeeCreate.defaultProps = {
   errors: {},
   loading: false,

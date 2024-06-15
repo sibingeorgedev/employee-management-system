@@ -1,14 +1,35 @@
 scalar Date
 
+enum Title {
+  Employee
+  Manager
+  Director
+  VP
+}
+
+enum Department {
+  IT
+  Marketing
+  HR
+  Engineering
+}
+
+enum EmployeeType {
+  FullTime
+  PartTime
+  Contract
+  Seasonal
+}
+
 type Employee {
   id: Int!
   firstName: String!
   lastName: String!
   age: Int!
   dateOfJoining: Date!
-  title: String!
-  department: String!
-  employeeType: String!
+  title: Title!
+  department: Department!
+  employeeType: EmployeeType!
   currentStatus: Boolean!
 }
 
@@ -17,9 +38,9 @@ input InputEmployee {
   lastName: String!
   age: Int!
   dateOfJoining: Date!
-  title: String!
-  department: String!
-  employeeType: String!
+  title: Title!
+  department: Department!
+  employeeType: EmployeeType!
   currentStatus: Boolean!
 }
 

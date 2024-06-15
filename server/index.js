@@ -1,15 +1,9 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
-// import { GraphQLScalarType, Kind } from 'graphql';
-// import { Employee } from './models/schema.js';
-// import { } from "./models/db.js";
 // import { } from "./initial-data.js";
-
-
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-
 import { resolvers } from "./graphql/resolvers/resolvers.js";
 
 
