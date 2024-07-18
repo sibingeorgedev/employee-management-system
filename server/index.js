@@ -6,17 +6,14 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { resolvers } from "./graphql/resolvers/resolvers.js";
 
-
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 
-
 const typeDefs = fs.readFileSync(
     path.join(__dirname, "graphql/schemas/schema.graphql"),
     "utf-8",
-  ); 
-
+);
 
 const server = new ApolloServer({ typeDefs, resolvers });
 server.start().then(() => {
