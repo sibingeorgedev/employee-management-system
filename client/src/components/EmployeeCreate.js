@@ -18,9 +18,21 @@ function EmployeeCreate(props) {
 
   const [formState, setFormState] = useState(initialFormState);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [ageError, setAgeError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // Validate age input
+    if (name === 'age') {
+      const age = parseInt(value);
+      if (age < 20 || age > 70) {
+        setAgeError('Age must be between 20 and 70.');
+      } else {
+        setAgeError('');
+      }
+    }
+
     setFormState((prevState) => ({
       ...prevState,
       [name]: value
@@ -29,6 +41,7 @@ function EmployeeCreate(props) {
 
   const resetForm = () => {
     setFormState(initialFormState);
+    setAgeError('');
   };
 
   const closeModal = () => {
@@ -81,6 +94,7 @@ function EmployeeCreate(props) {
                 value={formState.firstName}
                 onChange={handleChange}
                 className="input"
+                required
               />
               {props.errors.firstName && <p className="error">{props.errors.firstName}</p>}
             </div>
@@ -94,6 +108,7 @@ function EmployeeCreate(props) {
                 value={formState.lastName}
                 onChange={handleChange}
                 className="input"
+                required
               />
               {props.errors.lastName && <p className="error">{props.errors.lastName}</p>}
             </div>
@@ -107,7 +122,11 @@ function EmployeeCreate(props) {
                 value={formState.age}
                 onChange={handleChange}
                 className="input"
+                min="20"
+                max="70"
+                required
               />
+              {ageError && <p className="error">{ageError}</p>}
               {props.errors.age && <p className="error">{props.errors.age}</p>}
             </div>
             <div className="formGroup">
@@ -119,6 +138,7 @@ function EmployeeCreate(props) {
                 value={formState.dateOfJoining}
                 onChange={handleChange}
                 className="input"
+                required
               />
               {props.errors.dateOfJoining && <p className="error">{props.errors.dateOfJoining}</p>}
             </div>
