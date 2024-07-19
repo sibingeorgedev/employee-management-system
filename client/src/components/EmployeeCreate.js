@@ -27,7 +27,6 @@ function EmployeeCreate({
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Validate age input
     if (name === 'age') {
       const age = parseInt(value);
       if (age < 20 || age > 70) {

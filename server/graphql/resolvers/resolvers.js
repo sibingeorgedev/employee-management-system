@@ -16,8 +16,8 @@ export const resolvers = {
     },
     Mutation: {
         addEmployee: async (_, { employee }) => {
-            Employee.create(employee);
-            return employee;
+            const createdEmployee = Employee.create(employee);
+            return createdEmployee;
         },
         updateEmployee: async (_, { employeeId, title, department, currentStatus }) => {
             const updateFields = {};
