@@ -9,6 +9,10 @@ export const resolvers = {
             const employees = await Employee.find(filter);
             return employees;
         },
+        getEmployeeById: async (_, { employeeId }) => {
+            const employee = await Employee.findOne({ employeeId });
+            return employee;
+        },
     },
     Mutation: {
         addEmployee: async (_, { employee }) => {

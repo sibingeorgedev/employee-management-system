@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const EmployeeTable = React.memo(({ employeeData }) => {
   if (!Array.isArray(employeeData)) {
@@ -17,10 +18,11 @@ const EmployeeTable = React.memo(({ employeeData }) => {
           <th>Department</th>
           <th>Employee Type</th>
           <th>Current Status</th>
+          <th>Employee Details</th>
         </tr>
       </thead>
       <tbody>
-        {employeeData.filter(employee => employee != null).map(({ id, firstName, lastName, age, dateOfJoining, title, department, employeeType, currentStatus }) => (
+        {employeeData.filter(employee => employee != null).map(({ id, employeeId, firstName, lastName, age, dateOfJoining, title, department, employeeType, currentStatus }) => (
           <tr key={id}>
             <td>{firstName}</td>
             <td>{lastName}</td>
@@ -30,6 +32,9 @@ const EmployeeTable = React.memo(({ employeeData }) => {
             <td>{department}</td>
             <td>{employeeType}</td>
             <td>{currentStatus ? 'Working' : 'Retired'}</td>
+            <td>
+              <Link to={`/employee/${employeeId}`}>View Details</Link>
+            </td>
           </tr>
         ))}
       </tbody>

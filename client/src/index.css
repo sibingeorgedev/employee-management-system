@@ -230,3 +230,27 @@ body {
   font-size: 16px;
 }
 
+.employee-details {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.employee-details h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #000;
+}
+
+.employee-details p {
+  margin-bottom: 10px;
+}
+
+.employee-details p strong {
+  color: #555;
+}
