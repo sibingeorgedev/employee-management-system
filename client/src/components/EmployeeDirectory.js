@@ -127,13 +127,15 @@ const EmployeeDirectory = () => {
   return (
     <div className="employee-directory">
       <div className="search-container">
-        <EmployeeSearch />
-        <EmployeeFilter selectedFilter={filter} onFilterChange={handleFilterChange} />
+        <EmployeeCreate handleCreateEmployee={handleCreateEmployee} />
+        <div className="search-and-filter">
+          <EmployeeSearch />
+          <EmployeeFilter selectedFilter={filter} onFilterChange={handleFilterChange} />
+        </div>
       </div>
       <div className="table-container">
         <EmployeeTable employeeData={employees} onDelete={handleDeleteEmployee} />
       </div>
-      <EmployeeCreate handleCreateEmployee={handleCreateEmployee} />
     </div>
   );
 };
