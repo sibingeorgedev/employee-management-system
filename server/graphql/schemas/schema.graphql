@@ -23,6 +23,7 @@ enum EmployeeType {
 
 type Employee {
   id: Int!
+  employeeId: Int!
   firstName: String!
   lastName: String!
   age: Int!
@@ -34,6 +35,7 @@ type Employee {
 }
 
 input InputEmployee {
+  employeeId: Int!
   firstName: String!
   lastName: String!
   age: Int!

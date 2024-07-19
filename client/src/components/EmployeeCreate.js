@@ -58,6 +58,7 @@ function EmployeeCreate({
     const form = e.target;
 
     const employee = {
+      employeeId: 0,
       firstName: form.firstName.value,
       lastName: form.lastName.value,
       age: parseInt(form.age.value),

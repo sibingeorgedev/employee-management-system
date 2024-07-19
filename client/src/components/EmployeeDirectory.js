@@ -8,6 +8,7 @@ async function fetchData(employeeType) {
   const query = employeeType
     ? `query {
         getEmployees(type: ${employeeType}) {
+          employeeId
           firstName
           lastName
           age
@@ -20,6 +21,7 @@ async function fetchData(employeeType) {
       }`
     : `query {
         getEmployees {
+          employeeId
           firstName
           lastName
           age
@@ -56,6 +58,7 @@ const createEmployeeAPI = async (employee) => {
       query: `
         mutation addEmployee($input: InputEmployee!) {
           addEmployee(employee: $input) {
+            employeeId,
             firstName,
             lastName,
             age,
