@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const EmployeeTable = React.memo(({ employeeData }) => {
+const EmployeeTable = React.memo(({ employeeData, onDelete }) => {
   if (!Array.isArray(employeeData)) {
     return <p>No employee data available</p>;
   }
@@ -19,6 +19,7 @@ const EmployeeTable = React.memo(({ employeeData }) => {
           <th>Employee Type</th>
           <th>Current Status</th>
           <th>Employee Details</th>
+          <th>Delete Employee</th>
         </tr>
       </thead>
       <tbody>
@@ -34,6 +35,11 @@ const EmployeeTable = React.memo(({ employeeData }) => {
             <td>{currentStatus ? 'Working' : 'Retired'}</td>
             <td>
               <Link to={`/employee/${employeeId}`}>View Details</Link>
+            </td>
+            <td>
+              <button onClick={() => onDelete(employeeId)} className="deleteButton">
+                Delete
+              </button>
             </td>
           </tr>
         ))}

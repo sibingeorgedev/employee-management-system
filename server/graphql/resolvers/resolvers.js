@@ -32,6 +32,10 @@ export const resolvers = {
             );
             return updatedEmployee;
         },
+        deleteEmployee: async (_, { employeeId }) => {
+            const result = await Employee.deleteOne({ employeeId });
+            return result.deletedCount > 0;
+        },
     },
     Date: GQLDate
 };

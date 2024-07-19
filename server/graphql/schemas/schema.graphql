@@ -59,4 +59,5 @@ type Mutation {
     department: Department
     currentStatus: Boolean
   ): Employee!
+  deleteEmployee(employeeId: Int!): Boolean!
 }

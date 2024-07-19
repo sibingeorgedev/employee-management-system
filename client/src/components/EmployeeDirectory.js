@@ -41,7 +41,6 @@ async function fetchData(employeeType) {
 
   const json = await response.json();
 
-  // Check if json.data.getEmployees is an array
   if (!Array.isArray(json.data.getEmployees)) {
     console.error('Unexpected data format', json);
     return [];
@@ -78,6 +77,23 @@ const createEmployeeAPI = async (employee) => {
   return json.data.addEmployee;
 };
 
+const deleteEmployeeAPI = async (employeeId) => {
+  const response = await fetch('http://localhost:3002/graphql', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      query: `
+        mutation {
+          deleteEmployee(employeeId: ${employeeId})
+        }
+      `,
+    }),
+  });
+
+  const json = await response.json();
+  return json.data.deleteEmployee;
+};
+
 const EmployeeDirectory = () => {
   const [employees, setEmployees] = useState([]);
   const [filter, setFilter] = useState('');
@@ -89,6 +105,13 @@ const EmployeeDirectory = () => {
 
   const handleFilterChange = (newFilter) => {
     setFilter(newFilter);
+  };
+
+  const handleDeleteEmployee = async (employeeId) => {
+    const success = await deleteEmployeeAPI(employeeId);
+    if (success) {
+      setEmployees(employees.filter(employee => employee.employeeId !== employeeId));
+    }
   };
 
   useEffect(() => {
@@ -108,7 +131,7 @@ const EmployeeDirectory = () => {
         <EmployeeFilter selectedFilter={filter} onFilterChange={handleFilterChange} />
       </div>
       <div className="table-container">
-        <EmployeeTable employeeData={employees} />
+        <EmployeeTable employeeData={employees} onDelete={handleDeleteEmployee} />
       </div>
       <EmployeeCreate handleCreateEmployee={handleCreateEmployee} />
     </div>
