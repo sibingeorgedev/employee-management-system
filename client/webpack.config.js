@@ -45,7 +45,7 @@ const config = {
 
   plugins: [
     new HtmlWebpackPlugin({
-      title: "simple wb example",
+      title: "Employee Management System",
       template: "template_index.html",
       filename: "./index.html",
     }),

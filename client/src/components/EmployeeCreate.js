@@ -4,8 +4,12 @@ import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
 
-function EmployeeCreate(props) {
-
+function EmployeeCreate({
+  handleCreateEmployee = () => { },
+  errors = {},
+  loading = false,
+  mutationError = null
+}) {
   const initialFormState = {
     firstName: '',
     lastName: '',
@@ -64,7 +68,7 @@ function EmployeeCreate(props) {
       currentStatus: true,
     };
 
-    await props.handleCreateEmployee(employee);
+    await handleCreateEmployee(employee);
 
     setIsModalOpen(false);
     resetForm();
@@ -96,7 +100,7 @@ function EmployeeCreate(props) {
                 className="input"
                 required
               />
-              {props.errors.firstName && <p className="error">{props.errors.firstName}</p>}
+              {errors.firstName && <p className="error">{errors.firstName}</p>}
             </div>
             <div className="formGroup">
               <label htmlFor="lastName" className="label">Last Name:</label>
@@ -110,7 +114,7 @@ function EmployeeCreate(props) {
                 className="input"
                 required
               />
-              {props.errors.lastName && <p className="error">{props.errors.lastName}</p>}
+              {errors.lastName && <p className="error">{errors.lastName}</p>}
             </div>
             <div className="formGroup">
               <label htmlFor="age" className="label">Age:</label>
@@ -127,7 +131,7 @@ function EmployeeCreate(props) {
                 required
               />
               {ageError && <p className="error">{ageError}</p>}
-              {props.errors.age && <p className="error">{props.errors.age}</p>}
+              {errors.age && <p className="error">{errors.age}</p>}
             </div>
             <div className="formGroup">
               <label htmlFor="dateOfJoining" className="label">Date of Joining:</label>
@@ -140,7 +144,7 @@ function EmployeeCreate(props) {
                 className="input"
                 required
               />
-              {props.errors.dateOfJoining && <p className="error">{props.errors.dateOfJoining}</p>}
+              {errors.dateOfJoining && <p className="error">{errors.dateOfJoining}</p>}
             </div>
             <div className="formGroup">
               <label htmlFor="title" className="label">Title:</label>
@@ -169,10 +173,10 @@ function EmployeeCreate(props) {
                 <option value="Seasonal">Seasonal</option>
               </select>
             </div>
-            <button type="submit" disabled={props.loading} className="submitButton">
-              {props.loading ? 'Creating...' : 'Create Employee'}
+            <button type="submit" disabled={loading} className="submitButton">
+              {loading ? 'Creating...' : 'Create Employee'}
             </button>
-            {props.mutationError && <p className="error">An error occurred: {props.mutationError.message}</p>}
+            {mutationError && <p className="error">An error occurred: {mutationError.message}</p>}
           </form>
         </div>
         <button onClick={() => closeModal()} className="closeButton">Close</button>
@@ -183,17 +187,10 @@ function EmployeeCreate(props) {
 
 // Define the prop types for the component to ensure the data type of the props passed to the component is correct.
 EmployeeCreate.propTypes = {
-  handleCreateEmployee: PropTypes.func.isRequired,
+  handleCreateEmployee: PropTypes.func,
   errors: PropTypes.object,
   loading: PropTypes.bool,
   mutationError: PropTypes.object
-};
-
-// Set the default values for the props in case they are not passed to the component.
-EmployeeCreate.defaultProps = {
-  errors: {},
-  loading: false,
-  mutationError: null
 };
 
 export default React.memo(EmployeeCreate);

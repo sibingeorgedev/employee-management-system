@@ -1,9 +1,8 @@
 import React from 'react';
 
-const EmployeeTable = React.memo((employeeData) => {
-
-  if (!employeeData) {
-    return;
+const EmployeeTable = React.memo(({ employeeData }) => {
+  if (!Array.isArray(employeeData)) {
+    return <p>No employee data available</p>;
   }
 
   return (
@@ -21,7 +20,7 @@ const EmployeeTable = React.memo((employeeData) => {
         </tr>
       </thead>
       <tbody>
-        {employeeData.employeeData.map(({ id, firstName, lastName, age, dateOfJoining, title, department, employeeType, currentStatus }) => (
+        {employeeData.filter(employee => employee != null).map(({ id, firstName, lastName, age, dateOfJoining, title, department, employeeType, currentStatus }) => (
           <tr key={id}>
             <td>{firstName}</td>
             <td>{lastName}</td>
