@@ -254,3 +254,51 @@ body {
 .employee-details p strong {
   color: #555;
 }
+
+.employee-details form p {
+  margin-bottom: 15px;
+}
+
+.employee-details select,
+.employee-details input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.employee-details .button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.employee-details .submitButton,
+.employee-details .cancelButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.employee-details .submitButton {
+  color: #fff;
+  background-color: #007bff;
+}
+
+.employee-details .submitButton:hover {
+  background-color: #0056b3;
+}
+
+.employee-details .cancelButton {
+  color: #fff;
+  background-color: #6c757d;
+}
+
+.employee-details .cancelButton:hover {
+  background-color: #5a6268;
+}

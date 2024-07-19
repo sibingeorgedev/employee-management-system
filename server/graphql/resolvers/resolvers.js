@@ -19,6 +19,19 @@ export const resolvers = {
             Employee.create(employee);
             return employee;
         },
+        updateEmployee: async (_, { employeeId, title, department, currentStatus }) => {
+            const updateFields = {};
+            if (title) updateFields.title = title;
+            if (department) updateFields.department = department;
+            if (currentStatus !== undefined) updateFields.currentStatus = currentStatus;
+
+            const updatedEmployee = await Employee.findOneAndUpdate(
+                { employeeId },
+                { $set: updateFields },
+                { new: true }
+            );
+            return updatedEmployee;
+        },
     },
     Date: GQLDate
 };

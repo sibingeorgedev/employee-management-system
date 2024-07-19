@@ -53,4 +53,10 @@ type Query {
 
 type Mutation {
   addEmployee(employee: InputEmployee!): Employee!
+  updateEmployee(
+    employeeId: Int!
+    title: Title
+    department: Department
+    currentStatus: Boolean
+  ): Employee!
 }
