@@ -45,7 +45,7 @@ input InputEmployee {
 }
 
 type Query {
-  getEmployees: [Employee]!
+  getEmployees(type: EmployeeType): [Employee]!
 }
 
 type Mutation {
