@@ -105,10 +105,6 @@ const EmployeeDirectory = () => {
     setEmployees([...employees, employee]);
   };
 
-  const handleFilterChange = (newFilter) => {
-    // filter state is now managed by searchParams
-  };
-
   const handleDeleteEmployee = async (employeeId) => {
     const success = await deleteEmployeeAPI(employeeId);
     if (success) {
@@ -132,7 +128,7 @@ const EmployeeDirectory = () => {
         <EmployeeCreate handleCreateEmployee={handleCreateEmployee} />
         <div className="search-and-filter">
           <EmployeeSearch />
-          <EmployeeFilter onFilterChange={handleFilterChange} />
+          <EmployeeFilter />
         </div>
       </div>
       <div className="table-container">

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-const EmployeeFilter = ({ onFilterChange }) => {
+const EmployeeFilter = ({  }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const selectedFilter = searchParams.get("employeeType") || "";
@@ -9,7 +9,6 @@ const EmployeeFilter = ({ onFilterChange }) => {
   const handleChange = (event) => {
     const filterValue = event.target.value;
     navigate(`?employeeType=${filterValue}`);
-    onFilterChange(filterValue);
   };
 
   return (
