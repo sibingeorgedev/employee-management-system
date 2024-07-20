@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import EmployeeSearch from './EmployeeSearch';
 import EmployeeTable from './EmployeeTable';
 import EmployeeCreate from './EmployeeCreate';
@@ -96,7 +97,8 @@ const deleteEmployeeAPI = async (employeeId) => {
 
 const EmployeeDirectory = () => {
   const [employees, setEmployees] = useState([]);
-  const [filter, setFilter] = useState('');
+  const [searchParams] = useSearchParams();
+  const filter = searchParams.get("employeeType") || "";
 
   const handleCreateEmployee = async (employee) => {
     employee = await createEmployeeAPI(employee);
@@ -104,7 +106,7 @@ const EmployeeDirectory = () => {
   };
 
   const handleFilterChange = (newFilter) => {
-    setFilter(newFilter);
+    // filter state is now managed by searchParams
   };
 
   const handleDeleteEmployee = async (employeeId) => {
@@ -130,7 +132,7 @@ const EmployeeDirectory = () => {
         <EmployeeCreate handleCreateEmployee={handleCreateEmployee} />
         <div className="search-and-filter">
           <EmployeeSearch />
-          <EmployeeFilter selectedFilter={filter} onFilterChange={handleFilterChange} />
+          <EmployeeFilter onFilterChange={handleFilterChange} />
         </div>
       </div>
       <div className="table-container">

@@ -1,8 +1,15 @@
 import React from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
-const EmployeeFilter = ({ selectedFilter, onFilterChange }) => {
+const EmployeeFilter = ({ onFilterChange }) => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const selectedFilter = searchParams.get("employeeType") || "";
+
   const handleChange = (event) => {
-    onFilterChange(event.target.value);
+    const filterValue = event.target.value;
+    navigate(`?employeeType=${filterValue}`);
+    onFilterChange(filterValue);
   };
 
   return (
