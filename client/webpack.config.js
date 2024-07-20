@@ -1,11 +1,12 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
-  entry: "./src/index.js",
+  entry: './src/index.js',
   output: {
-    path: path.resolve(__dirname, "public"),
-    publicPath: "/",
+    path: path.resolve(__dirname, 'public'),
+    filename: 'bundle.js',
+    publicPath: '/',
   },
   devServer: {
     static: {
@@ -18,41 +19,41 @@ const config = {
         pathRewrite: { '^/api': '' },
       }
     ],
-    historyApiFallback: { index: "index.html" },
+    historyApiFallback: {
+      index: '/index.html',
+      disableDotRule: true,
+    },
     open: true,
     port: 3003,
-    host: "0.0.0.0",
+    host: '0.0.0.0',
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/i,
-        loader: "babel-loader",
+        use: 'babel-loader',
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-        type: "asset",
+        type: 'asset/resource',
       },
-
-      // Add your rules for custom modules here
-      // Learn more about loaders from https://webpack.js.org/loaders/
     ],
   },
-
   plugins: [
     new HtmlWebpackPlugin({
-      title: "Employee Management System",
-      template: "template_index.html",
-      filename: "./index.html",
+      template: './template_index.html',
+      filename: 'index.html',
     }),
   ],
-  mode: "development",
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
+  mode: 'development',
 };
 
-module.exports = () => {
-  return config;
-};
+module.exports = config;

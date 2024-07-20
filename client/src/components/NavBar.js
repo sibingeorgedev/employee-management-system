@@ -41,8 +41,6 @@ export default function NavBar() {
       <a
         href="/about.html"
         style={linkStyle}
-        target="_blank"
-        rel="noopener noreferrer"
       >
         About
       </a>
