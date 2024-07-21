@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { fetchEmployeeById, updateEmployee } from '../api/employeeAPI';
 
 const EmployeeDetails = () => {
   const { employeeId } = useParams();
@@ -12,36 +13,21 @@ const EmployeeDetails = () => {
   });
 
   useEffect(() => {
-    const fetchEmployee = async () => {
-      const response = await fetch('http://localhost:3002/graphql', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          query: `query {
-            getEmployeeById(employeeId: ${employeeId}) {
-              firstName
-              lastName
-              age
-              dateOfJoining
-              title
-              department
-              employeeType
-              currentStatus
-            }
-          }`,
-        }),
-      });
-
-      const { data } = await response.json();
-      setEmployee(data.getEmployeeById);
-      setFormData({
-        title: data.getEmployeeById.title,
-        department: data.getEmployeeById.department,
-        currentStatus: data.getEmployeeById.currentStatus
-      });
+    const getEmployee = async () => {
+      try {
+        const employeeData = await fetchEmployeeById(employeeId);
+        setEmployee(employeeData);
+        setFormData({
+          title: employeeData.title,
+          department: employeeData.department,
+          currentStatus: employeeData.currentStatus
+        });
+      } catch (error) {
+        console.error('Error fetching employee:', error);
+      }
     };
 
-    fetchEmployee();
+    getEmployee();
   }, [employeeId]);
 
   const handleInputChange = (e) => {
@@ -54,33 +40,13 @@ const EmployeeDetails = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch('http://localhost:3002/graphql', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        query: `
-          mutation updateEmployee($employeeId: Int!, $title: Title, $department: Department, $currentStatus: Boolean) {
-            updateEmployee(employeeId: $employeeId, title: $title, department: $department, currentStatus: $currentStatus) {
-              employeeId
-              firstName
-              lastName
-              title
-              department
-              currentStatus
-            }
-          }
-        `,
-        variables: {
-          employeeId: parseInt(employeeId),
-          ...formData,
-          currentStatus: formData.currentStatus === 'true'
-        },
-      }),
-    });
-
-    const { data } = await response.json();
-    setEmployee(data.updateEmployee);
-    setEditMode(false);
+    try {
+      const updatedEmployee = await updateEmployee(employeeId, formData);
+      setEmployee(updatedEmployee);
+      setEditMode(false);
+    } catch (error) {
+      console.error('Error updating employee:', error);
+    }
   };
 
   const handleCancel = () => {
