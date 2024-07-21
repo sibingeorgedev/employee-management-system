@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
+import { createEmployeeAPI } from '../api/employeeAPI';
 
 Modal.setAppElement('#root');
 
 function EmployeeCreate({
-  handleCreateEmployee = () => { },
+  handleCreateEmployee = null,
   errors = {},
   loading = false,
   mutationError = null
@@ -68,7 +69,16 @@ function EmployeeCreate({
       currentStatus: true,
     };
 
-    await handleCreateEmployee(employee);
+    try {
+      if (handleCreateEmployee) {
+        await handleCreateEmployee(employee);
+      } else {
+        const newEmployee = await createEmployeeAPI(employee);
+        console.log("Employee created successfully", newEmployee);
+      }
+    } catch (error) {
+      console.error("Error creating employee", error);
+    }
 
     setIsModalOpen(false);
     resetForm();
@@ -185,7 +195,6 @@ function EmployeeCreate({
   );
 }
 
-// Define the prop types for the component to ensure the data type of the props passed to the component is correct.
 EmployeeCreate.propTypes = {
   handleCreateEmployee: PropTypes.func,
   errors: PropTypes.object,
