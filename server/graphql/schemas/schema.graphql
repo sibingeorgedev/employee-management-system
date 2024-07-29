@@ -49,6 +49,7 @@ input InputEmployee {
 type Query {
   getEmployees(type: EmployeeType): [Employee]!
   getEmployeeById(employeeId: Int!): Employee!
+  getUpcomingRetirementEmployees: [Employee]!
 }
 
 type Mutation {

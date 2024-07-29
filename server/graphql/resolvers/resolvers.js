@@ -1,6 +1,10 @@
 import { } from "../../models/db.js";
 import { Employee } from "../../models/schema.js";
 import { GQLDate } from "./sacalars.js";
+import moment from 'moment';
+import { calculateRetirementDate, calculateDateDifference } from '../../utils/dateUtils.js';
+
+const RETIREMENT_AGE = 65;
 
 export const resolvers = {
     Query: {
@@ -13,6 +17,27 @@ export const resolvers = {
             const employee = await Employee.findOne({ employeeId });
             return employee;
         },
+        getUpcomingRetirementEmployees: async () => {
+            const today = new Date();
+            const sixMonthsLater = new Date();
+            sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
+
+            const employees = await Employee.find();
+            const upcomingRetirementEmployees = employees.filter(employee => {
+                const retirementDate = calculateRetirementDate(employee.dateOfJoining, employee.age);
+                return retirementDate <= sixMonthsLater;
+            });
+
+            return upcomingRetirementEmployees.map(employee => {
+                const retirementDate = calculateRetirementDate(employee.dateOfJoining, employee.age);
+                const timeUntilRetirement = calculateDateDifference(today, retirementDate);
+                return {
+                    ...employee.toObject(),
+                    retirementDate,
+                    timeUntilRetirement
+                };
+            });
+        }
     },
     Mutation: {
         addEmployee: async (_, { employee }) => {

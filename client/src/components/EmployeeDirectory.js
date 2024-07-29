@@ -6,7 +6,7 @@ import EmployeeFilter from './EmployeeFilter';
 import EmployeeCreate from './EmployeeCreate';
 import PropTypes from 'prop-types';
 import DialogModal from '../common/Dialog-Modal';
-import { fetchEmployees, createEmployeeAPI, deleteEmployeeAPI, fetchEmployeeById } from '../api/employeeAPI';
+import { fetchEmployees, createEmployeeAPI, deleteEmployeeAPI, fetchEmployeeById, fetchUpcomingRetirementEmployees } from '../api/employeeAPI';
 
 const EmployeeDirectory = ({ employees }) => {
   const [employeeData, setEmployeeData] = useState(employees);
@@ -40,7 +40,12 @@ const EmployeeDirectory = ({ employees }) => {
 
   useEffect(() => {
     const wrapFunction = async () => {
-      const data = await fetchEmployees(filter);
+      let data = [];
+      if (filter === "UpComingRetirement") {
+        data = await fetchUpcomingRetirementEmployees();
+      } else {
+        data = await fetchEmployees(filter);
+      }
       console.log("Fetching data...", data);
       setEmployeeData(data);
     };

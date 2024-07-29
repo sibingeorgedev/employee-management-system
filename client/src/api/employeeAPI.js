@@ -68,6 +68,38 @@ export const fetchEmployeeById = async (employeeId) => {
   return json.data.getEmployeeById;
 };
 
+export async function fetchUpcomingRetirementEmployees() {
+  const query =
+    `query {
+        getUpcomingRetirementEmployees {
+          employeeId
+          firstName
+          lastName
+          age
+          dateOfJoining
+          title
+          department
+          employeeType
+          currentStatus
+        }
+      }`;
+
+  const response = await fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ query }),
+  });
+
+  const json = await response.json();
+
+  if (!Array.isArray(json.data.getUpcomingRetirementEmployees)) {
+    console.error('Unexpected data format', json);
+    return [];
+  }
+
+  return json.data.getUpcomingRetirementEmployees || [];
+}
+
 export async function createEmployeeAPI(employee) {
   const response = await fetch(API_URL, {
     method: 'POST',

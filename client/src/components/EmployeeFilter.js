@@ -19,6 +19,7 @@ const EmployeeFilter = ({  }) => {
         <option value="PartTime">Part Time</option>
         <option value="Contract">Contract</option>
         <option value="Seasonal">Seasonal</option>
+        <option value="UpComingRetirement">UpComing Retirement</option>
       </select>
     </div>
   );
