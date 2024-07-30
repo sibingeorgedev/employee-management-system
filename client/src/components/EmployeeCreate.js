@@ -4,12 +4,14 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { createEmployeeAPI } from '../api/employeeAPI';
+import { useNavigate } from 'react-router-dom';
 
 function EmployeeCreate({
   handleCreateEmployee = null,
   errors = {},
   loading = false,
-  mutationError = null
+  mutationError = null,
+  isNavBar = true
 }) {
   const initialFormState = {
     firstName: '',
@@ -22,6 +24,7 @@ function EmployeeCreate({
     employeeType: 'FullTime'
   };
 
+  const navigate = useNavigate();
   const [formState, setFormState] = useState(initialFormState);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ageError, setAgeError] = useState('');
@@ -86,8 +89,24 @@ function EmployeeCreate({
 
   return (
     <div>
-      <Button variant="primary" onClick={() => setIsModalOpen(true)}>Create Employee</Button>
-
+      <div className={isNavBar ? 'text-center' : ''}>
+        <Button
+          variant="primary"
+          onClick={() => setIsModalOpen(true)}
+          className={isNavBar ? 'm-5' : ''}
+        >
+          Create Employee
+        </Button>
+        {isNavBar && (
+          <Button
+            variant="secondary"
+            onClick={() => navigate('/')}
+            className="mt-lg-2"
+          >
+            Back to Employee Table
+          </Button>
+        )}
+      </div>
       <Modal
         show={isModalOpen}
         onHide={closeModal}

@@ -64,7 +64,7 @@ const EmployeeDirectory = ({ employees = [] }) => {
     <div className="container mt-4">
       <div className="row mb-3">
         <div className="col-md-12 mb-3">
-          <EmployeeCreate handleCreateEmployee={handleCreateEmployee} />
+          <EmployeeCreate handleCreateEmployee={handleCreateEmployee} isNavBar={false} />
         </div>
         <div className="col-md-12 mb-3">
           <div className="d-flex justify-content-between">
