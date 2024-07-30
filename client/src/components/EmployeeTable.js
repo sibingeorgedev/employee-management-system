@@ -26,7 +26,7 @@ const EmployeeTable = React.memo(({ employeeData, onDelete }) => {
         </thead>
         <tbody>
           {employeeData.filter(employee => employee != null).map(({ id, employeeId, firstName, lastName, age, dateOfJoining, title, department, employeeType, currentStatus }) => (
-            <tr key={id}>
+            <tr key={employeeId}>
               <td>{firstName}</td>
               <td>{lastName}</td>
               <td>{age}</td>

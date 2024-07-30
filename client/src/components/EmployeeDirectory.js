@@ -51,7 +51,6 @@ const EmployeeDirectory = ({ employees = [] }) => {
         } else {
           data = await fetchEmployees(filter);
         }
-        console.log("Fetching data...", data);
         setEmployeeData(data);
       } catch (error) {
         console.error("Error fetching employees", error);
