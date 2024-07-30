@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchEmployeeById, updateEmployee } from '../api/employeeAPI';
+import { Button, Form, Container, Row, Col } from 'react-bootstrap';
 
 const EmployeeDetails = () => {
   const { employeeId } = useParams();
@@ -61,84 +62,85 @@ const EmployeeDetails = () => {
   if (!employee) return <div>Loading...</div>;
 
   return (
-    <div className="employee-details">
+    <Container className="mt-4">
       <h1>Employee Details</h1>
       {editMode ? (
-        <form onSubmit={handleSubmit}>
-          <p>
-            <strong>First Name:</strong> {employee.firstName}
-          </p>
-          <p>
-            <strong>Last Name:</strong> {employee.lastName}
-          </p>
-          <p>
-            <strong>Age:</strong> {employee.age}
-          </p>
-          <p>
-            <strong>Date of Joining:</strong> {new Date(employee.dateOfJoining).toLocaleDateString()}
-          </p>
-          <p>
-            <strong>Title:</strong>
-            <select
-              name="title"
-              value={formData.title}
-              onChange={handleInputChange}
-            >
-              <option value="Employee">Employee</option>
-              <option value="Manager">Manager</option>
-              <option value="Director">Director</option>
-              <option value="VP">VP</option>
-            </select>
-          </p>
-          <p>
-            <strong>Department:</strong>
-            <select
-              name="department"
-              value={formData.department}
-              onChange={handleInputChange}
-            >
-              <option value="IT">IT</option>
-              <option value="Marketing">Marketing</option>
-              <option value="HR">HR</option>
-              <option value="Engineering">Engineering</option>
-            </select>
-          </p>
-          <p>
-            <strong>Current Status:</strong>
-            <select
-              name="currentStatus"
-              value={formData.currentStatus}
-              onChange={handleInputChange}
-            >
-              <option value="true">Working</option>
-              <option value="false">Retired</option>
-            </select>
-          </p>
-          <div className="button-group">
-            <button type="submit" className="submitButton">Update</button>
-            <button type="button" className="cancelButton" onClick={handleCancel}>Cancel</button>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group as={Row} controlId="formTitle">
+            <Form.Label column sm={4}>Title</Form.Label>
+            <Col sm={8}>
+              <Form.Control
+                as="select"
+                name="title"
+                value={formData.title}
+                onChange={handleInputChange}
+              >
+                <option value="Employee">Employee</option>
+                <option value="Manager">Manager</option>
+                <option value="Director">Director</option>
+                <option value="VP">VP</option>
+              </Form.Control>
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row} controlId="formDepartment">
+            <Form.Label column sm={4}>Department</Form.Label>
+            <Col sm={8}>
+              <Form.Control
+                as="select"
+                name="department"
+                value={formData.department}
+                onChange={handleInputChange}
+              >
+                <option value="IT">IT</option>
+                <option value="Marketing">Marketing</option>
+                <option value="HR">HR</option>
+                <option value="Engineering">Engineering</option>
+              </Form.Control>
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row} controlId="formCurrentStatus">
+            <Form.Label column sm={4}>Current Status</Form.Label>
+            <Col sm={8}>
+              <Form.Control
+                as="select"
+                name="currentStatus"
+                value={formData.currentStatus}
+                onChange={handleInputChange}
+              >
+                <option value="true">Working</option>
+                <option value="false">Retired</option>
+              </Form.Control>
+            </Col>
+          </Form.Group>
+
+          <div className="d-flex justify-content-end mt-md-2">
+            <Button type="submit" variant="primary" className="me-2">Update</Button>
+            <Button type="button" variant="secondary" onClick={handleCancel}>Cancel</Button>
           </div>
-        </form>
+        </Form>
       ) : (
         <>
-          <div className="details-view">
+          <div className="mb-4">
             <p><strong>First Name:</strong> {employee.firstName}</p>
             <p><strong>Last Name:</strong> {employee.lastName}</p>
             <p><strong>Age:</strong> {employee.age}</p>
+            <p><strong>Date of Birth:</strong> {new Date(employee.dateOfBirth).toLocaleDateString()}</p>
             <p><strong>Date of Joining:</strong> {new Date(employee.dateOfJoining).toLocaleDateString()}</p>
             <p><strong>Title:</strong> {employee.title}</p>
             <p><strong>Department:</strong> {employee.department}</p>
             <p><strong>Current Status:</strong> {employee.currentStatus ? 'Working' : 'Retired'}</p>
-            <button onClick={() => setEditMode(true)} className="submitButton">Edit</button>
+            <Button onClick={() => setEditMode(true)} variant="primary">Edit</Button>
           </div>
           <h2>Retirement Details</h2>
-          <div className="details-view">
+          <div>
             <p><strong>Retirement Date:</strong> {new Date(employee.retirementDate).toLocaleDateString()}</p>
             <p><strong>Time Until Retirement:</strong> {employee.timeUntilRetirement.years} years, {employee.timeUntilRetirement.months} months, {employee.timeUntilRetirement.days} days</p>
           </div>
         </>
       )}
-    </div>
+    </Container>
   );
 };
 

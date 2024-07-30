@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Modal from 'react-modal';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 import { createEmployeeAPI } from '../api/employeeAPI';
-
-Modal.setAppElement('#root');
 
 function EmployeeCreate({
   handleCreateEmployee = null,
@@ -56,18 +56,16 @@ function EmployeeCreate({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const form = e.target;
-
     const employee = {
       employeeId: 0,
-      firstName: form.firstName.value,
-      lastName: form.lastName.value,
-      age: parseInt(form.age.value),
-      dateOfBirth: form.dateOfBirth.value,
-      dateOfJoining: form.dateOfJoining.value,
-      title: form.title.value,
-      department: form.department.value,
-      employeeType: form.employeeType.value,
+      firstName: formState.firstName,
+      lastName: formState.lastName,
+      age: parseInt(formState.age),
+      dateOfBirth: formState.dateOfBirth,
+      dateOfJoining: formState.dateOfJoining,
+      title: formState.title,
+      department: formState.department,
+      employeeType: formState.employeeType,
       currentStatus: true,
     };
 
@@ -88,123 +86,150 @@ function EmployeeCreate({
 
   return (
     <div>
-      <button className="createButton" onClick={() => setIsModalOpen(true)}>Create Employee</button>
+      <Button variant="primary" onClick={() => setIsModalOpen(true)}>Create Employee</Button>
 
       <Modal
-        isOpen={isModalOpen}
-        onRequestClose={() => closeModal()}
-        contentLabel="Create Employee"
-        className="modal"
-        overlayClassName="overlay"
+        show={isModalOpen}
+        onHide={closeModal}
+        centered
+        size="lg"
       >
-        <h2 className="modalTitle">Create Employee</h2>
-        <div className="modalContent">
-          <form onSubmit={handleSubmit} className="form">
-            <div className="formGroup">
-              <label htmlFor="firstName" className="label">First Name:</label>
-              <input
+        <Modal.Header closeButton>
+          <Modal.Title>Create Employee</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="formFirstName">
+              <Form.Label>First Name</Form.Label>
+              <Form.Control
                 type="text"
-                id="firstName"
                 name="firstName"
                 placeholder="First Name"
                 value={formState.firstName}
                 onChange={handleChange}
-                className="input"
+                isInvalid={!!errors.firstName}
                 required
               />
-              {errors.firstName && <p className="error">{errors.firstName}</p>}
-            </div>
-            <div className="formGroup">
-              <label htmlFor="lastName" className="label">Last Name:</label>
-              <input
+              <Form.Control.Feedback type="invalid">
+                {errors.firstName}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formLastName">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control
                 type="text"
-                id="lastName"
                 name="lastName"
                 placeholder="Last Name"
                 value={formState.lastName}
                 onChange={handleChange}
-                className="input"
+                isInvalid={!!errors.lastName}
                 required
               />
-              {errors.lastName && <p className="error">{errors.lastName}</p>}
-            </div>
-            <div className="formGroup">
-              <label htmlFor="age" className="label">Age:</label>
-              <input
+              <Form.Control.Feedback type="invalid">
+                {errors.lastName}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formAge">
+              <Form.Label>Age</Form.Label>
+              <Form.Control
                 type="number"
-                id="age"
                 name="age"
                 placeholder="Age"
                 value={formState.age}
                 onChange={handleChange}
-                className="input"
+                isInvalid={!!ageError}
                 min="20"
                 max="70"
                 required
               />
-              {ageError && <p className="error">{ageError}</p>}
-              {errors.age && <p className="error">{errors.age}</p>}
-            </div>
-            <div className="formGroup">
-              <label htmlFor="dateOfBirth" className="label">Date of Birth:</label>
-              <input
+              <Form.Control.Feedback type="invalid">
+                {ageError || errors.age}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formDateOfBirth">
+              <Form.Label>Date of Birth</Form.Label>
+              <Form.Control
                 type="date"
-                id="dateOfBirth"
                 name="dateOfBirth"
                 value={formState.dateOfBirth}
                 onChange={handleChange}
-                className="input"
+                isInvalid={!!errors.dateOfBirth}
                 required
               />
-              {errors.dateOfBirth && <p className="error">{errors.dateOfBirth}</p>}
-            </div>
-            <div className="formGroup">
-              <label htmlFor="dateOfJoining" className="label">Date of Joining:</label>
-              <input
+              <Form.Control.Feedback type="invalid">
+                {errors.dateOfBirth}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formDateOfJoining">
+              <Form.Label>Date of Joining</Form.Label>
+              <Form.Control
                 type="date"
-                id="dateOfJoining"
                 name="dateOfJoining"
                 value={formState.dateOfJoining}
                 onChange={handleChange}
-                className="input"
+                isInvalid={!!errors.dateOfJoining}
                 required
               />
-              {errors.dateOfJoining && <p className="error">{errors.dateOfJoining}</p>}
-            </div>
-            <div className="formGroup">
-              <label htmlFor="title" className="label">Title:</label>
-              <select id="title" name="title" value={formState.title} onChange={handleChange} className="select">
+              <Form.Control.Feedback type="invalid">
+                {errors.dateOfJoining}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formTitle">
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                as="select"
+                name="title"
+                value={formState.title}
+                onChange={handleChange}
+              >
                 <option value="Employee">Employee</option>
                 <option value="Manager">Manager</option>
                 <option value="Director">Director</option>
                 <option value="VP">VP</option>
-              </select>
-            </div>
-            <div className="formGroup">
-              <label htmlFor="department" className="label">Department:</label>
-              <select id="department" name="department" value={formState.department} onChange={handleChange} className="select">
+              </Form.Control>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formDepartment">
+              <Form.Label>Department</Form.Label>
+              <Form.Control
+                as="select"
+                name="department"
+                value={formState.department}
+                onChange={handleChange}
+              >
                 <option value="IT">IT</option>
                 <option value="Marketing">Marketing</option>
                 <option value="HR">HR</option>
                 <option value="Engineering">Engineering</option>
-              </select>
-            </div>
-            <div className="formGroup">
-              <label htmlFor="employeeType" className="label">Employee Type:</label>
-              <select id="employeeType" name="employeeType" value={formState.employeeType} onChange={handleChange} className="select">
+              </Form.Control>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formEmployeeType">
+              <Form.Label>Employee Type</Form.Label>
+              <Form.Control
+                as="select"
+                name="employeeType"
+                value={formState.employeeType}
+                onChange={handleChange}
+              >
                 <option value="FullTime">FullTime</option>
                 <option value="PartTime">PartTime</option>
                 <option value="Contract">Contract</option>
                 <option value="Seasonal">Seasonal</option>
-              </select>
-            </div>
-            <button type="submit" disabled={loading} className="submitButton">
+              </Form.Control>
+            </Form.Group>
+
+            <Button type="submit" variant="primary" disabled={loading}>
               {loading ? 'Creating...' : 'Create Employee'}
-            </button>
-            {mutationError && <p className="error">An error occurred: {mutationError.message}</p>}
-          </form>
-        </div>
-        <button onClick={() => closeModal()} className="closeButton">Close</button>
+            </Button>
+            {mutationError && <p className="text-danger mt-2">An error occurred: {mutationError.message}</p>}
+          </Form>
+        </Modal.Body>
       </Modal>
     </div>
   );

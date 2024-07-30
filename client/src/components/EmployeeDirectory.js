@@ -5,7 +5,7 @@ import EmployeeTable from './EmployeeTable';
 import EmployeeFilter from './EmployeeFilter';
 import EmployeeCreate from './EmployeeCreate';
 import PropTypes from 'prop-types';
-import DialogModal from '../common/Dialog-Modal';
+import { Modal, Button } from 'react-bootstrap';
 import { fetchEmployees, createEmployeeAPI, deleteEmployeeAPI, fetchEmployeeById, fetchUpcomingRetirementEmployees } from '../api/employeeAPI';
 
 const EmployeeDirectory = ({ employees }) => {
@@ -29,7 +29,7 @@ const EmployeeDirectory = ({ employees }) => {
     }
     const success = await deleteEmployeeAPI(employeeId);
     if (success) {
-      setEmployeeData(typeof(employeeData) !== 'object' ? employeeData.filter(employee => employee.employeeId !== employeeId): []);
+      setEmployeeData(employeeData.filter(emp => emp.employeeId !== employeeId));
     }
   };
 
@@ -54,18 +54,30 @@ const EmployeeDirectory = ({ employees }) => {
   }, [filter]);
 
   return (
-    <div className="employee-directory">
-      <div className="search-container">
-        <EmployeeCreate handleCreateEmployee={handleCreateEmployee} />
-        <div className="search-and-filter">
-          <EmployeeSearch />
-          <EmployeeFilter />
+    <div className="container mt-4">
+      <div className="row mb-3">
+        <div className="col-md-12 mb-3">
+          <EmployeeCreate handleCreateEmployee={handleCreateEmployee} />
+        </div>
+        <div className="col-md-12 mb-3">
+          <div className="d-flex justify-content-between">
+            {/* <EmployeeSearch /> */}
+            <EmployeeFilter />
+          </div>
         </div>
       </div>
-      <div className="table-container">
+      <div className="table-responsive">
         <EmployeeTable employeeData={employeeData} onDelete={handleDeleteEmployee} />
       </div>
-      <DialogModal isOpen={isModalOpen} onClose={closeModal} message={errorMessage} />
+      <Modal show={isModalOpen} onHide={closeModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Error</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{errorMessage}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={closeModal}>Close</Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
