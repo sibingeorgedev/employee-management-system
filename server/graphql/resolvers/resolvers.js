@@ -61,7 +61,15 @@ export const resolvers = {
                 { $set: updateFields },
                 { new: true }
             );
-            return updatedEmployee;
+
+            const today = new Date();
+            const retirementDate = calculateRetirementDate(updatedEmployee.dateOfBirth, updatedEmployee.dateOfJoining, RETIREMENT_AGE);
+            const timeUntilRetirement = calculateDateDifference(today, retirementDate);
+            return {
+                ...updatedEmployee.toObject(),
+                retirementDate,
+                timeUntilRetirement
+            };
         },
         deleteEmployee: async (_, { employeeId }) => {
             const result = await Employee.deleteOne({ employeeId });
