@@ -15,6 +15,7 @@ function EmployeeCreate({
     firstName: '',
     lastName: '',
     age: '',
+    dateOfBirth: '',
     dateOfJoining: '',
     title: 'Employee',
     department: 'IT',
@@ -62,6 +63,7 @@ function EmployeeCreate({
       firstName: form.firstName.value,
       lastName: form.lastName.value,
       age: parseInt(form.age.value),
+      dateOfBirth: form.dateOfBirth.value,
       dateOfJoining: form.dateOfJoining.value,
       title: form.title.value,
       department: form.department.value,
@@ -142,6 +144,19 @@ function EmployeeCreate({
               />
               {ageError && <p className="error">{ageError}</p>}
               {errors.age && <p className="error">{errors.age}</p>}
+            </div>
+            <div className="formGroup">
+              <label htmlFor="dateOfBirth" className="label">Date of Birth:</label>
+              <input
+                type="date"
+                id="dateOfBirth"
+                name="dateOfBirth"
+                value={formState.dateOfBirth}
+                onChange={handleChange}
+                className="input"
+                required
+              />
+              {errors.dateOfBirth && <p className="error">{errors.dateOfBirth}</p>}
             </div>
             <div className="formGroup">
               <label htmlFor="dateOfJoining" className="label">Date of Joining:</label>

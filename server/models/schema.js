@@ -8,6 +8,7 @@ const EmployeeSchema = new Schema({
     firstName: String,
     lastName: String,
     age: Number,
+    dateOfBirth: Date,
     dateOfJoining: Date,
     title: String,
     department: String,

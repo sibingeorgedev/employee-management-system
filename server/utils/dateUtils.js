@@ -1,7 +1,16 @@
-export function calculateRetirementDate(dateOfJoining, ageAtJoining, retirementAge = 65) {
-    const dateOfJoiningDate = new Date(dateOfJoining);
+export function calculateRetirementDate(dateOfBirth, dateOfJoining, retirementAge = 65) {
+    const birthdate = new Date(dateOfBirth);
+    const doj = new Date(dateOfJoining);
+    
+    const ageAtJoining = doj.getFullYear() - birthdate.getFullYear();
+    const m = doj.getMonth() - birthdate.getMonth();
+    
+    if (m < 0 || (m === 0 && doj.getDate() < birthdate.getDate())) {
+        ageAtJoining--;
+    }
+
     const yearsUntilRetirement = retirementAge - ageAtJoining;
-    const retirementDate = new Date(dateOfJoiningDate);
+    const retirementDate = new Date(doj);
     retirementDate.setFullYear(retirementDate.getFullYear() + yearsUntilRetirement);
     return retirementDate;
 }

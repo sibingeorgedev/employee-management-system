@@ -21,17 +21,26 @@ enum EmployeeType {
   Seasonal
 }
 
+type TimeUntilRetirement {
+  years: Int!
+  months: Int!
+  days: Int!
+}
+
 type Employee {
   id: Int!
   employeeId: Int!
   firstName: String!
   lastName: String!
   age: Int!
+  dateOfBirth: Date!
   dateOfJoining: Date!
   title: Title!
   department: Department!
   employeeType: EmployeeType!
   currentStatus: Boolean!
+  retirementDate: Date!
+  timeUntilRetirement: TimeUntilRetirement
 }
 
 input InputEmployee {
@@ -39,6 +48,7 @@ input InputEmployee {
   firstName: String!
   lastName: String!
   age: Int!
+  dateOfBirth: Date!
   dateOfJoining: Date!
   title: Title!
   department: Department!

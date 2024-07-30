@@ -8,6 +8,7 @@ export async function fetchEmployees(employeeType) {
           firstName
           lastName
           age
+          dateOfBirth
           dateOfJoining
           title
           department
@@ -21,6 +22,7 @@ export async function fetchEmployees(employeeType) {
           firstName
           lastName
           age
+          dateOfBirth
           dateOfJoining
           title
           department
@@ -55,11 +57,18 @@ export const fetchEmployeeById = async (employeeId) => {
           firstName
           lastName
           age
+          dateOfBirth
           dateOfJoining
           title
           department
           employeeType
           currentStatus
+          retirementDate
+          timeUntilRetirement {
+            years
+            months
+            days
+          }
         }
       }`,
     }),
@@ -76,6 +85,7 @@ export async function fetchUpcomingRetirementEmployees() {
           firstName
           lastName
           age
+          dateOfBirth
           dateOfJoining
           title
           department
@@ -112,6 +122,7 @@ export async function createEmployeeAPI(employee) {
             firstName,
             lastName,
             age,
+            dateOfBirth,
             dateOfJoining,
             title,
             department,

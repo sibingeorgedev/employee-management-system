@@ -129,6 +129,9 @@ const EmployeeDetails = () => {
           <p><strong>Department:</strong> {employee.department}</p>
           <p><strong>Current Status:</strong> {employee.currentStatus ? 'Working' : 'Retired'}</p>
           <button onClick={() => setEditMode(true)} className="submitButton">Edit</button>
+          <h2>Retirement Details</h2>
+          <p><strong>Retirement Date:</strong> {new Date(employee.retirementDate).toLocaleDateString()}</p>
+          <p><strong>Time Until Retirement:</strong> {employee.timeUntilRetirement.years} years, {employee.timeUntilRetirement.months} months, {employee.timeUntilRetirement.days} days</p>
         </>
       )}
     </div>
