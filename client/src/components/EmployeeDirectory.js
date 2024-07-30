@@ -26,7 +26,7 @@ const EmployeeDirectory = ({ employees = [] }) => {
 
   const handleDeleteEmployee = async (employeeId) => {
       const deletedEmployeeData = await fetchEmployeeById(employeeId);
-      if (employeeData.currentStatus) {
+      if (deletedEmployeeData.currentStatus) {
         setErrorMessage("CAN’T DELETE EMPLOYEE – STATUS ACTIVE");
         setIsModalOpen(true);
         return;

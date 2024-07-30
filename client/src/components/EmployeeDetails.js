@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { fetchEmployeeById, updateEmployee } from '../api/employeeAPI';
 import { Button, Form, Container, Row, Col } from 'react-bootstrap';
 
 const EmployeeDetails = () => {
   const { employeeId } = useParams();
+  const navigate = useNavigate();
   const [employee, setEmployee] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
@@ -140,6 +141,13 @@ const EmployeeDetails = () => {
           </div>
         </>
       )}
+      <Button
+        variant="secondary"
+        onClick={() => navigate('/')}
+        className="mt-lg-2"
+      >
+        Back to Employee Table
+      </Button>
     </Container>
   );
 };
