@@ -269,78 +269,87 @@ body {
   font-weight: bold;
 }
 
+
 .employee-details {
-  display: flex;
-  flex-direction: column;
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #fff;
   border-radius: 8px;
+  background-color: #f9f9f9;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .employee-details h1 {
   text-align: center;
   margin-bottom: 20px;
-  color: #000;
+  color: #333;
+}
+
+.employee-details form,
+.employee-details .details-view {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .employee-details p {
-  margin-bottom: 10px;
+  margin: 0;
 }
 
 .employee-details p strong {
-  color: #555;
-}
-
-.employee-details form p {
-  margin-bottom: 15px;
+  display: inline-block;
+  width: 150px;
+  font-weight: bold;
 }
 
 .employee-details select,
-.employee-details input {
-  width: 100%;
+.employee-details .submitButton,
+.employee-details .cancelButton,
+.employee-details button {
   padding: 10px;
-  border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 14px;
-  background-color: #f8f9fa;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+}
+
+.employee-details select {
+  width: calc(100% - 160px);
 }
 
 .employee-details .button-group {
   display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+  gap: 10px;
+  justify-content: center;
 }
 
 .employee-details .submitButton,
-.employee-details .cancelButton {
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.employee-details .submitButton {
-  color: #fff;
+.employee-details .cancelButton,
+.employee-details button {
   background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.employee-details .submitButton:hover {
+.employee-details .cancelButton {
+  background-color: #dc3545;
+}
+
+.employee-details .submitButton:hover,
+.employee-details .cancelButton:hover,
+.employee-details button:hover {
   background-color: #0056b3;
 }
 
-.employee-details .cancelButton {
-  color: #fff;
-  background-color: #6c757d;
+.employee-details .cancelButton:hover {
+  background-color: #c82333;
 }
 
-.employee-details .cancelButton:hover {
-  background-color: #5a6268;
+.employee-details h2 {
+  text-align: center;
+  margin-top: 30px;
+  color: #555;
 }
+
 
 .employee-table .deleteButton {
   padding: 5px 10px;
@@ -397,3 +406,4 @@ body {
 .modal-body {
   margin-top: 20px;
 }
+
