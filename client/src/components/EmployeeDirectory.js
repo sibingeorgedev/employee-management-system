@@ -8,29 +8,33 @@ import PropTypes from 'prop-types';
 import { Modal, Button } from 'react-bootstrap';
 import { fetchEmployees, createEmployeeAPI, deleteEmployeeAPI, fetchEmployeeById, fetchUpcomingRetirementEmployees } from '../api/employeeAPI';
 
-const EmployeeDirectory = ({ employees }) => {
+const EmployeeDirectory = ({ employees = [] }) => {
   const [employeeData, setEmployeeData] = useState(employees);
   const [searchParams] = useSearchParams();
   const filter = searchParams.get("employeeType") || "";
   const [errorMessage, setErrorMessage] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleCreateEmployee = async (employee) => {
-    employee = await createEmployeeAPI(employee);
-    setEmployeeData([...employeeData, employee]);
+    try {
+      const newEmployee = await createEmployeeAPI(employee);
+      setEmployeeData([...employeeData, newEmployee]);
+    } catch (error) {
+      console.error("Error creating employee", error);
+    }
   };
 
   const handleDeleteEmployee = async (employeeId) => {
-    const employeeData = await fetchEmployeeById(employeeId);
-    if (employeeData.currentStatus) {
-      setErrorMessage("CAN’T DELETE EMPLOYEE – STATUS ACTIVE");
-      setIsModalOpen(true);
-      return;
-    }
-    const success = await deleteEmployeeAPI(employeeId);
-    if (success) {
-      setEmployeeData(employeeData.filter(emp => emp.employeeId !== employeeId));
-    }
+      const deletedEmployeeData = await fetchEmployeeById(employeeId);
+      if (employeeData.currentStatus) {
+        setErrorMessage("CAN’T DELETE EMPLOYEE – STATUS ACTIVE");
+        setIsModalOpen(true);
+        return;
+      }
+      const success = await deleteEmployeeAPI(employeeId);
+      if (success) {
+        setEmployeeData(employeeData.filter(emp => emp.employeeId !== employeeId));
+      }
   };
 
   const closeModal = () => {
@@ -40,14 +44,18 @@ const EmployeeDirectory = ({ employees }) => {
 
   useEffect(() => {
     const wrapFunction = async () => {
-      let data = [];
-      if (filter === "UpComingRetirement") {
-        data = await fetchUpcomingRetirementEmployees();
-      } else {
-        data = await fetchEmployees(filter);
+      try {
+        let data = [];
+        if (filter === "UpComingRetirement") {
+          data = await fetchUpcomingRetirementEmployees();
+        } else {
+          data = await fetchEmployees(filter);
+        }
+        console.log("Fetching data...", data);
+        setEmployeeData(data);
+      } catch (error) {
+        console.error("Error fetching employees", error);
       }
-      console.log("Fetching data...", data);
-      setEmployeeData(data);
     };
 
     wrapFunction();
@@ -61,7 +69,6 @@ const EmployeeDirectory = ({ employees }) => {
         </div>
         <div className="col-md-12 mb-3">
           <div className="d-flex justify-content-between">
-            {/* <EmployeeSearch /> */}
             <EmployeeFilter />
           </div>
         </div>
@@ -83,8 +90,7 @@ const EmployeeDirectory = ({ employees }) => {
 };
 
 EmployeeDirectory.propTypes = {
-  employees: PropTypes.array.isRequired,
-  handleCreateEmployee: PropTypes.func.isRequired,
+  employees: PropTypes.array
 };
 
 export default EmployeeDirectory;

@@ -153,6 +153,12 @@ export const updateEmployee = async (employeeId, formData) => {
             title
             department
             currentStatus
+            retirementDate
+            timeUntilRetirement {
+              years
+              months
+              days
+            }
           }
         }
       `,

@@ -66,7 +66,7 @@ const EmployeeDetails = () => {
       <h1>Employee Details</h1>
       {editMode ? (
         <Form onSubmit={handleSubmit}>
-          <Form.Group as={Row} controlId="formTitle">
+          <Form.Group as={Row} controlId="formTitle" className="mb-2">
             <Form.Label column sm={4}>Title</Form.Label>
             <Col sm={8}>
               <Form.Control
@@ -83,7 +83,7 @@ const EmployeeDetails = () => {
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} controlId="formDepartment">
+          <Form.Group as={Row} controlId="formDepartment" className="mb-2">
             <Form.Label column sm={4}>Department</Form.Label>
             <Col sm={8}>
               <Form.Control
@@ -100,7 +100,7 @@ const EmployeeDetails = () => {
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} controlId="formCurrentStatus">
+          <Form.Group as={Row} controlId="formCurrentStatus" className="mb-2">
             <Form.Label column sm={4}>Current Status</Form.Label>
             <Col sm={8}>
               <Form.Control
