@@ -8,8 +8,7 @@ const RETIREMENT_AGE = 65;
 const calculateRetirementDetails = (employee) => {
     const today = new Date();
     const retirementDate = calculateRetirementDate(employee.dateOfBirth, employee.dateOfJoining, RETIREMENT_AGE);
-    const timeUntilRetirement = calculateDa.
-    teDifference(today, retirementDate);
+    const timeUntilRetirement = calculateDateDifference(today, retirementDate);
     return { retirementDate, timeUntilRetirement };
 };
 
