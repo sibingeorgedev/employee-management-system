@@ -5,6 +5,14 @@ import { calculateRetirementDate, calculateDateDifference } from '../../utils/da
 
 const RETIREMENT_AGE = 65;
 
+const calculateRetirementDetails = (employee) => {
+    const today = new Date();
+    const retirementDate = calculateRetirementDate(employee.dateOfBirth, employee.dateOfJoining, RETIREMENT_AGE);
+    const timeUntilRetirement = calculateDa.
+    teDifference(today, retirementDate);
+    return { retirementDate, timeUntilRetirement };
+};
+
 export const resolvers = {
     Query: {
         getEmployees: async (_, { type }) => {
@@ -14,9 +22,7 @@ export const resolvers = {
         },
         getEmployeeById: async (_, { employeeId }) => {
             const employee = await Employee.findOne({ employeeId });
-            const today = new Date();
-            const retirementDate = calculateRetirementDate(employee.dateOfBirth, employee.dateOfJoining, RETIREMENT_AGE);
-            const timeUntilRetirement = calculateDateDifference(today, retirementDate);
+            const { retirementDate, timeUntilRetirement } = calculateRetirementDetails(employee);
             return {
                 ...employee.toObject(),
                 retirementDate,
@@ -24,19 +30,18 @@ export const resolvers = {
             };
         },
         getUpcomingRetirementEmployees: async () => {
-            const today = new Date();
             const sixMonthsLater = new Date();
             sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
 
             const employees = await Employee.find();
             const upcomingRetirementEmployees = employees.filter(employee => {
                 const retirementDate = calculateRetirementDate(employee.dateOfBirth, employee.dateOfJoining, RETIREMENT_AGE);
-                return retirementDate <= sixMonthsLater;
+                // return retirementDate <= sixMonthsLater;
+                return retirementDate >= today && retirementDate <= sixMonthsLater;
             });
 
             return upcomingRetirementEmployees.map(employee => {
-                const retirementDate = calculateRetirementDate(employee.dateOfBirth, employee.dateOfJoining, RETIREMENT_AGE);
-                const timeUntilRetirement = calculateDateDifference(today, retirementDate);
+                const { retirementDate, timeUntilRetirement } = calculateRetirementDetails(employee);
                 return {
                     ...employee.toObject(),
                     retirementDate,
@@ -62,9 +67,7 @@ export const resolvers = {
                 { new: true }
             );
 
-            const today = new Date();
-            const retirementDate = calculateRetirementDate(updatedEmployee.dateOfBirth, updatedEmployee.dateOfJoining, RETIREMENT_AGE);
-            const timeUntilRetirement = calculateDateDifference(today, retirementDate);
+            const { retirementDate, timeUntilRetirement } = calculateRetirementDetails(updatedEmployee);
             return {
                 ...updatedEmployee.toObject(),
                 retirementDate,
