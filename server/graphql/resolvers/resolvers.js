@@ -7,7 +7,7 @@ const RETIREMENT_AGE = 65;
 
 const calculateRetirementDetails = (employee) => {
     const today = new Date();
-    const retirementDate = calculateRetirementDate(employee.dateOfBirth, employee.dateOfJoining, RETIREMENT_AGE);
+    const retirementDate = calculateRetirementDate(employee.dateOfBirth, RETIREMENT_AGE);
     const timeUntilRetirement = calculateDateDifference(today, retirementDate);
     return { retirementDate, timeUntilRetirement };
 };
@@ -30,12 +30,12 @@ export const resolvers = {
         },
         getUpcomingRetirementEmployees: async () => {
             const sixMonthsLater = new Date();
+            const today = new Date();
             sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
 
             const employees = await Employee.find();
             const upcomingRetirementEmployees = employees.filter(employee => {
-                const retirementDate = calculateRetirementDate(employee.dateOfBirth, employee.dateOfJoining, RETIREMENT_AGE);
-                // return retirementDate <= sixMonthsLater;
+                const retirementDate = calculateRetirementDate(employee.dateOfBirth, RETIREMENT_AGE);
                 return retirementDate >= today && retirementDate <= sixMonthsLater;
             });
 

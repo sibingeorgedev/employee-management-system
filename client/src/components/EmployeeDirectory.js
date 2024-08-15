@@ -9,6 +9,7 @@ import { Modal, Button } from 'react-bootstrap';
 import { fetchEmployees, createEmployeeAPI, deleteEmployeeAPI, fetchEmployeeById, fetchUpcomingRetirementEmployees } from '../api/employeeAPI';
 
 const EmployeeDirectory = ({ employees = [] }) => {
+  
   const [employeeData, setEmployeeData] = useState(employees);
   const [searchParams] = useSearchParams();
   const filter = searchParams.get("employeeType") || "";

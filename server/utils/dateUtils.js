@@ -1,23 +1,13 @@
-export function calculateRetirementDate(dateOfBirth, dateOfJoining, retirementAge = 65) {
-    const birthdate = new Date(dateOfBirth);
-    const doj = new Date(dateOfJoining);
-    
-    const ageAtJoining = doj.getFullYear() - birthdate.getFullYear();
-    const m = doj.getMonth() - birthdate.getMonth();
-    
-    if (m < 0 || (m === 0 && doj.getDate() < birthdate.getDate())) {
-        ageAtJoining--;
-    }
-
-    const yearsUntilRetirement = retirementAge - ageAtJoining;
-    const retirementDate = new Date(doj);
-    retirementDate.setFullYear(retirementDate.getFullYear() + yearsUntilRetirement);
+export function calculateRetirementDate(dateOfBirth, retirementAge = 65) {
+    let birthdate = new Date(dateOfBirth);
+    let retirementDate = new Date(birthdate);
+    retirementDate.setFullYear(retirementDate.getFullYear() + retirementAge);
     return retirementDate;
 }
 
-export function calculateDateDifference(startDate, endDate) {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
+export function calculateDateDifference(today, retirementDate) {
+    let start = new Date(today);
+    let end = new Date(retirementDate);
 
     let years = end.getFullYear() - start.getFullYear();
     let months = end.getMonth() - start.getMonth();
